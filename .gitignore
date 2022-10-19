@@ -3,8 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# ignore setting.json for token security
-settings.json
+# ignore config.json for token security
+config.json
+
+# ignore log.txt
+logs.txt
 
 # C extensions
 *.so
