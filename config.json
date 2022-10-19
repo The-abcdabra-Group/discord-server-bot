@@ -1,0 +1,31 @@
+{
+    "token": "",
+    "status": "abcdabra's YT Channel",
+    "automod": {
+        "enabled": true,
+        "filter_profanity": true,
+        "filter_everyone_ping": true,
+        "filter_mass_mention": true
+    },
+    "commands": {
+        "guild": 1008261096672600105,
+        "beta_guild": 1026293995372032020,
+        "sync": true
+    },
+    "verification": {
+        "verification_roles": [1024015493411111022, 1024015704825016321, 1024015724278194176, 1024015735669919815, 1024016127271125012, 1032177755233734676],
+        "interaction_id": "1c4077dc65c3fb2eeb60f3233ea3ab47",
+        "channel": 1024017941580239030
+    },
+    "roles": {
+        "staff_role": 1024016567714988152,
+        "mod_role": 1024016676162900040,
+        "admin_role": 1024016676162900040
+    },
+    "antinuke": {
+        "enabled": true,
+        "tolerance": 5,
+        "distribution": 1,
+        "unit": "m" 
+    }
+}
