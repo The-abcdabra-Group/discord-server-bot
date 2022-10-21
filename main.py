@@ -30,6 +30,7 @@ async def commands():
         data = input("Would you like to sync slash commands with the discord API? (Y/N) ")
         if data == "Y" or data == "y":
             await client.tree.sync(guild=discord.Object(id=config["commands"]["guild"]))
+            await client.tree.sync(guild=discord.Object(id=config["commands"]["beta_guild"]))
             print("Synced slash commands!")
         else:
             print("Skipped syncing slash commands!")
@@ -37,6 +38,7 @@ async def commands():
 
     elif config["commands"]["sync"] == True:
         await client.tree.sync(guild=discord.Object(id=config["commands"]["guild"]))
+        await client.tree.sync(guild=discord.Object(id=config["commands"]["beta_guild"]))
         print("Synced slash commands!")
 
 
