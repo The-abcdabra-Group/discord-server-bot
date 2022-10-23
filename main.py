@@ -4,8 +4,9 @@ import json
 from services.verify import member_verification
 from commands.moderation import moderation
 from commands.economy import economy
+from services.antinuke import antinuke
 
-client = discord.Client(intents=discord.Intents.default())
+client = discord.Client(intents=discord.Intents.all())
 client.tree = app_commands.CommandTree(client)
 
 config = json.load(open("config.json"))
@@ -45,7 +46,7 @@ async def commands():
 
 async def services():
     await member_verification(client, config)
-
+    await antinuke(client, config)
 
 
 client.run(config["token"])
