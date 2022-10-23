@@ -7,6 +7,11 @@ async def moderation(client: discord.Client, tree: app_commands.CommandTree, con
     @tree.command(name="mute", description="Silences a user for the specified amount of time", guild=discord.Object(id=config["commands"]["guild"]))
     # @app_commands.checks.has_any_role(1024016676162900040, 1024016899702526045)
     async def mute(interaction: discord.Interaction, user: discord.Member, time: str, reason: str):
+        # Assert values for type checking
+        assert isinstance(interaction.user, discord.Member)
+        assert isinstance(client.user, discord.ClientUser)
+
+        
         pytime = await convert_time(time)
 
         if user.id == interaction.user.id:
@@ -38,6 +43,11 @@ async def moderation(client: discord.Client, tree: app_commands.CommandTree, con
 
     @tree.command(name="ban", description="Bans a user permanently", guild=discord.Object(id=config["commands"]["guild"]))
     async def ban(interaction: discord.Interaction, user: discord.Member, reason: str):
+        # Assert values for type checking
+        assert isinstance(interaction.user, discord.Member)
+        assert isinstance(client.user, discord.ClientUser)
+
+
         if user.id == interaction.user.id:
             embed = discord.Embed(color=0xEF4444).set_author(name="Ban Command").add_field(name="Failed to execute command", value=f"You cannot ban yourself, unless...")
         
