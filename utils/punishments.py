@@ -45,7 +45,7 @@ class Punishments:
         staff_logs = await self.client.fetch_channel(self.config["channels"]["staff_logs"])
 
         embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Recieved").add_field(name="You have been muted", value=f"Reason: `{reason}` \nTime: `{time}` \n*Punishments are non-appealable*")
-        logs_embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Logs").add_field(name=f"Member was muted", value=f"{self.member.mention} **was muted** \nReason: `{reason}` \nTime: `{time}` \nPunished By: `{author}`")
+        logs_embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Logs").add_field(name="Member was muted", value=f"{self.member.mention} **was muted** \nReason: `{reason}` \nTime: `{time}` \nPunished By: `{author}`")
 
         await staff_logs.send(embed=logs_embed)
         try:
