@@ -10,6 +10,7 @@ async def automod(client: discord.Client, config):
 
     @client.event
     async def on_message(message: discord.Message):
+        if not isinstance(message.channel, discord.TextChannel):
             return
 
         if message.author.guild_permissions.administrator or message.guild.get_role(config["roles"]["staff_role"]) in message.author.roles:
