@@ -7,6 +7,7 @@ tree = app_commands.CommandTree(client)
 
 config = json.load(open("config.json"))
 
+
 @client.event
 async def on_ready():
     await client.change_presence(activity=discord.Game(name=config["status"]))
@@ -19,11 +20,10 @@ async def commands():
     from commands.moderation import moderation
     from commands.economy import economy
 
-
     await moderation(client, tree, config)
     await economy(client, tree, config)
 
-    if config["commands"]["sync"] == False:
+    if not config["commands"]["sync"]:
         print("Skipped syncing slash commands!")
         pass
 
@@ -36,12 +36,10 @@ async def commands():
         else:
             print("Skipped syncing slash commands!")
             pass
-
-    elif config["commands"]["sync"] == True:
+    elif config["commands"]["sync"]:
         await tree.sync(guild=discord.Object(id=config["commands"]["guild"]))
         await tree.sync(guild=discord.Object(id=config["commands"]["beta_guild"]))
         print("Synced slash commands!")
-
 
 
 async def services():
