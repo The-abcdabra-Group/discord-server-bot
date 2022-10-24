@@ -1,10 +1,6 @@
 import discord
 from discord import app_commands
 import json
-from services.verify import member_verification
-from commands.moderation import moderation
-from commands.economy import economy
-from services.antinuke import antinuke
 
 client = discord.Client(intents=discord.Intents.all())
 tree = app_commands.CommandTree(client)
@@ -20,6 +16,10 @@ async def on_ready():
 
 
 async def commands():
+    from commands.moderation import moderation
+    from commands.economy import economy
+
+
     await moderation(client, tree, config)
     await economy(client, tree, config)
 
@@ -45,8 +45,12 @@ async def commands():
 
 
 async def services():
+    from services.verify import member_verification
+    from services.antinuke import antinuke
+    from services.automod import automod
+
     await member_verification(client, config)
     await antinuke(client, config)
-
+    await automod(client, config)
 
 client.run(config["token"])
