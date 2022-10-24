@@ -1,5 +1,5 @@
 import discord
-from utils.time import convert_time
+from utils.time import Time
 from typing import Union
 
 class Punishments:
@@ -27,6 +27,24 @@ class Punishments:
 
         embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Recieved").add_field(name="You have been warned", value=f"Reason: `{reason}` \n*Punishments are non-appealable*")
         logs_embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Logs").add_field(name=f"Member was warned", value=f"{self.member.mention} **was warned** \nReason: `{reason}` \nPunished By: `{author}`")
+
+        await staff_logs.send(embed=logs_embed)
+        try:
+            await self.member.send(embed=embed)
+        except:
+            await staff_logs.send(f"<a:deny:1033973641030946826> Unable to notify {self.member.mention} of punishment")
+        
+
+    async def mute(self, reason: str, time: str, author: Union[str, discord.Member]):
+        pytime = Time()
+        data = await pytime.convert_time(time)
+
+        await self.member.timeout(data, reason=reason)
+
+        staff_logs = await self.client.fetch_channel(self.config["channels"]["staff_logs"])
+
+        embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Recieved").add_field(name="You have been muted", value=f"Reason: `{reason}` \nTime: `{time}` \n*Punishments are non-appealable*")
+        logs_embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Logs").add_field(name=f"Member was muted", value=f"{self.member.mention} **was muted** \nReason: `{reason}` \nTime: `{time}` \nPunished By: `{author}`")
 
         await staff_logs.send(embed=logs_embed)
         try:
