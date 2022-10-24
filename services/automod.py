@@ -26,7 +26,8 @@ async def automod(client: discord.Client, config):
             return
 
         if re.search(profanity_regex, message.content, flags=re.IGNORECASE) and config["automod"]["filter_profanity"] == True:
+            punishment = Punishments(client, message.author, config)
             await message.channel.send(f"<a:deny:1033973641030946826> {message.author.mention} Please refrain from using profanity on the server!")
             await message.delete()
-            await message.author.timeout(timedelta(minutes=5))
+            await punishment.mute("Sent profanty on the server", "5m", "Auto Moderator")
             return
