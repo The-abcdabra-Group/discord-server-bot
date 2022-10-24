@@ -3,10 +3,11 @@ import discord
 from datetime import timedelta
 from utils.punishments import Punishments
 
+
 async def automod(client: discord.Client, config):
     link_regex = r"((http|https)\:\/\/)?[a-zA-Z0-9\.\/\?\:@\-_=#]+\.([a-zA-Z]){2,6}([a-zA-Z0-9\.\&\/\?\:@\-_=#])*"
     profanity_regex = r"pussy|cum|nude|nudes|nudities|fuck me|dick|cock|boobs|vagina|orgy|orgi|horny|horni|fuck|fuck you"
-    
+
     @client.event
     async def on_message(message: discord.Message):
         staff_role = message.guild.get_role(config["roles"]["staff_role"])
