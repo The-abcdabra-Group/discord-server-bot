@@ -1,6 +1,6 @@
 import discord
-from utils.time import convert_time
 from discord import app_commands
+from utils.punishments import Punishments
 
 
 async def moderation(client: discord.Client, tree: app_commands.CommandTree, config):
@@ -11,8 +11,7 @@ async def moderation(client: discord.Client, tree: app_commands.CommandTree, con
         assert isinstance(interaction.user, discord.Member)
         assert isinstance(client.user, discord.ClientUser)
 
-        
-        pytime = await convert_time(time)
+        punishment = Punishments(client, user, config)
 
         if user.id == interaction.user.id:
             embed = discord.Embed(color=0xEF4444).set_author(name="Mute Command").add_field(name="Failed to execute command", value=f"You cannot mute yourself, unless...")
@@ -35,7 +34,7 @@ async def moderation(client: discord.Client, tree: app_commands.CommandTree, con
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
         else:
-            await user.timeout(pytime, reason=reason)
+            await punishment.mute(reason, time, interaction.user)
             embed = discord.Embed(color=0x22C55E).set_author(name="Mute Command").add_field(name="Command Successful", value=f"{user.mention} has been muted for `{time}` \nReason: `{reason}`").set_footer(text="Abuse of Power is Prohibited")
         
             await interaction.response.send_message(embed=embed, ephemeral=True)
