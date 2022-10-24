@@ -19,31 +19,10 @@ async def moderation(client: discord.Client, tree: app_commands.CommandTree, con
         
             await interaction.response.send_message(embed=embed, ephemeral=True)
 
-
     @tree.command(name="ban", description="Bans a user permanently", guild=discord.Object(id=config["commands"]["guild"]))
     async def ban(interaction: discord.Interaction, user: discord.Member, reason: str):
-        # Assert values for type checking
-        assert isinstance(interaction.user, discord.Member)
-        assert isinstance(client.user, discord.ClientUser)
-
-
-        if user.id == interaction.user.id:
-            embed = discord.Embed(color=0xEF4444).set_author(name="Ban Command").add_field(name="Failed to execute command", value=f"You cannot ban yourself, unless...")
-        
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
-        elif user.top_role > interaction.user.top_role:
-            embed = discord.Embed(color=0xEF4444).set_author(name="Ban Command").add_field(name="Failed to execute command", value=f"{user.mention} has a higher role than you")
-        
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
-        elif user.id == client.user.id:
-            embed = discord.Embed(color=0xEF4444).set_author(name="Ban Command").add_field(name="Failed to execute command", value=f"You cannot punish {client.user.mention}")
-        
-            await interaction.response.send_message(embed=embed, ephemeral=True)
-            return
-        elif user.guild_permissions.administrator == True:
-            embed = discord.Embed(color=0xEF4444).set_author(name="Ban Command").add_field(name="Failed to execute command", value="You cannot punish an `ADMINISTRATOR`")
+        if user.top_role > interaction.user.top_role or user.id in [interaction.user.id, client.user.id] or user.guild_permissions.administrator:
+            embed = discord.Embed(color=0xEF4444).set_author(name="Ban Command").add_field(name="Failed to execute command", value="You cannot ban this user.")
         
             await interaction.response.send_message(embed=embed, ephemeral=True)
             return
