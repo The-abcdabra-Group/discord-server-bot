@@ -1,5 +1,3 @@
-import asyncio
-import json
 import discord
 
 async def antinuke(client: discord.Client, config):
