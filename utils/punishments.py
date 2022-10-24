@@ -1,6 +1,7 @@
 import discord
-from utils.time import Time
 from typing import Union
+from utils.time import convert_time
+
 
 class Punishments:
     """Represents a Punishment issuer
