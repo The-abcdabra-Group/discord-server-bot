@@ -16,7 +16,7 @@ async def automod(client: discord.Client, config):
         if message.author.guild_permissions.administrator or message.guild.get_role(config["roles"]["staff_role"]) in message.author.roles:
             return
 
-        if re.search(link_regex, message.content) and config["automod"]["filter_links"] == True:
+        if config["automod"]["filter_links"] and re.search(link_regex, message.content):
             punishment = Punishments(client, message.author, config)
 
             await message.channel.send(f"<a:deny:1033973641030946826> {message.author.mention} Please refrain from sending links on the server!")
@@ -24,7 +24,7 @@ async def automod(client: discord.Client, config):
             await punishment.warn("Sent unauthorized links in public chat", "Auto Moderator")
             return
 
-        if re.search(profanity_regex, message.content, flags=re.IGNORECASE) and config["automod"]["filter_profanity"] == True:
+        if config["automod"]["filter_profanity"] and re.search(profanity_regex, message.content, flags=re.IGNORECASE):
             punishment = Punishments(client, message.author, config)
             await message.channel.send(f"<a:deny:1033973641030946826> {message.author.mention} Please refrain from using profanity on the server!")
             await message.delete()
