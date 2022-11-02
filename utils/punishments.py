@@ -47,3 +47,30 @@ class Punishments:
             await self.member.send(embed=embed)
         except:
             await staff_logs.send(f"<a:deny:1033973641030946826> Unable to notify {self.member.mention} of punishment")
+        
+    async def ban(self, reason: str, author: Union[str, discord.Member]):
+        staff_logs = await self.client.fetch_channel(self.config["channels"]["staff_logs"])
+        embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Recieved").add_field(name="You have been banned", value=f"Reason: `{reason}` \n*Punishments are non-appealable*")  
+        try:
+            await self.member.send(embed=embed)
+        except:
+            await staff_logs.send(f"<a:deny:1033973641030946826> Unable to notify {self.member.mention} of punishment")
+
+        await self.member.ban(reason=reason, delete_message_days=7)
+
+        logs_embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Logs").add_field(name="Member was banned", value=f"{self.member.mention} **was banned** \nReason: `{reason}` \nPunished By: `{author}`")
+        await staff_logs.send(embed=logs_embed)
+
+    async def kick(self, reason: str, author: Union[str, discord.Member]):
+        staff_logs = await self.client.fetch_channel(self.config["channels"]["staff_logs"])
+
+        embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Recieved").add_field(name="You have been kicked", value=f"Reason: `{reason}` \n*Punishments are non-appealable*")  
+        try:
+            await self.member.send(embed=embed)
+        except:
+            await staff_logs.send(f"<a:deny:1033973641030946826> Unable to notify {self.member.mention} of punishment")
+
+        await self.member.kick(reason=reason, delete_message_days=7)
+
+        logs_embed = discord.Embed(color=0xEF4444).set_author(name="Punishment Logs").add_field(name="Member was kicked", value=f"{self.member.mention} **was kicked** \nReason: `{reason}` \nPunished By: `{author}`")
+        await staff_logs.send(embed=logs_embed)
