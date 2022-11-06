@@ -47,3 +47,8 @@ async def economy(client: discord.Client, tree: app_commands.CommandTree, mongod
                 await interaction.response.send_message(f"A bird was carrying {money} :coin: and dropped it in your hand")
 
         await statement(randrange(1,6))
+    
+    @beg.error
+    async def beg_error(interaction: discord.Interaction, error: app_commands.AppCommandError):
+        if isinstance(error, app_commands.CommandOnCooldown):
+            await interaction.response.send_message(str(error), ephemeral=True)
