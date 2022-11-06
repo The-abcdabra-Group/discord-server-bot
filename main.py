@@ -1,12 +1,14 @@
 import discord
 from discord import app_commands
 import json
+from pymongo import MongoClient
 
 client = discord.Client(intents=discord.Intents.all())
 tree = app_commands.CommandTree(client)
 
 config = json.load(open("config.json"))
 
+mongo_client = MongoClient(f"mongodb+srv://{config['database']['username']}:{config['database']['password']}@{config['database']['cluster']}/?retryWrites=true&w=majority", serverSelectionTimeoutMS=5000)
 
 @client.event
 async def on_ready():
@@ -21,7 +23,7 @@ async def commands():
     from commands.economy import economy
 
     await moderation(client, tree, config)
-    await economy(client, tree, config)
+    await economy(client, tree, mongo_client, config)
 
     if not config["commands"]["sync"]:
         print("Skipped syncing slash commands!")
